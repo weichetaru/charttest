@@ -10,6 +10,10 @@ from chartdemo.models import MonthlyWeatherByCity
 
 def home(request):
     #start_code
+    def monthname(month_num):
+        names ={1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun',
+        7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'}
+        return names[month_num]
     df_options ={
     'title':{
         'text':'Temp Comparison'
@@ -62,6 +66,7 @@ def home(request):
         'houston_temp']
         }}],
         chart_options = df_options
+        ,x_sortf_mapf_mts = (None, monthname, True)
         )
     cht3 = Chart(
         datasource = ds,
@@ -101,6 +106,7 @@ def home(request):
         'houston_temp']
         }}],
         chart_options = df_options
+        ,x_sortf_mapf_mts = (None, monthname, True)
         )
     cht6 = Chart(
         datasource = ds,
