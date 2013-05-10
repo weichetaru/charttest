@@ -2,9 +2,8 @@
 
 {% block chart_loader_header %}
     {% load chartit %}
-    {{ chart_list|load_charts:"c1" }}
+    {{ chart_list|load_charts:'c1,c2,c3,c4,c5,c6'}}
 {% endblock %}
-
 {% block content %}
 <div class="container-fluid">
     <div class="row-fluid">
@@ -43,36 +42,26 @@
                         <p><a class="btn" href="#">View details &raquo;</a></p>
                 </div><!--/span-->
                 <div class="span4">
-                    <h2>Chart2</h2>
                         <div id='c2'></div>
-                        <p>chart2 here</p>
                         <p><a class="btn" href="#">View details &raquo;</a></p>
                 </div><!--/span-->
                 <div class="span4">
-                    <h2>Chart3</h2>
                         <div id='c3'></div>
-                        <p>chart3 here</p>
                         <p><a class="btn" href="#">View details &raquo;</a></p>
                 </div><!--/span-->
             </div><!--/row-->
 <!---------------------------------------------------------------->            
             <div class="row-fluid">
                 <div class="span4">
-                    <h2>Chart4</h2>
                         <div id='c4'></div>
-                        <p>chart4 here</p>
                         <p><a class="btn" href="#">View details &raquo;</a></p>
                     </div><!--/span-->
                 <div class="span4">
-                    <h2>Chart5</h2>
                         <div id='c5'></div>
-                        <p>chart5 here</p>
                     <p><a class="btn" href="#">View details &raquo;</a></p>
                 </div><!--/span-->
                 <div class="span4">
-                    <h2>Chart6</h2>
                         <div id='c6'></div>
-                        <p>chart6 here</p>
                     <p><a class="btn" href="#">View details &raquo;</a></p>
                 </div><!--/span-->
             </div><!--/row-->
