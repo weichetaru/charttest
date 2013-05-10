@@ -59,7 +59,7 @@ def home(request):
         series_options =
         [{'options':{
         'type': 'bar',
-        'stacking': False},
+        'stacking': True},
         'terms':{
         'month': [
         'boston_temp',
