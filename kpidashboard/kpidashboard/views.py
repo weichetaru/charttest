@@ -102,7 +102,6 @@ def home(request):
         'stacking': False},
         'terms':{
         'month': [
-        'boston_temp',
         'houston_temp']
         }}],
         chart_options = df_options
