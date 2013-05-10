@@ -1,0 +1,87 @@
+{% extends "kpidashboard/base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Sidebar</li>
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-header">Sidebar</li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-header">Sidebar</li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+            <div class="hero-unit">
+                <h1>HighStock Here</h1>
+                    <p>for long-term time series</p>
+                    <!--<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
+            </div>
+<!---------------------------------------------------------------->            
+            <div class="row-fluid">
+                <div class="span4">
+                    <h2>Chart1</h2>
+                        <div id='c1'></div>
+                        <p>chart1 here</p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div><!--/span-->
+                <div class="span4">
+                    <h2>Chart2</h2>
+                        <div id='c2'></div>
+                        <p>chart2 here</p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div><!--/span-->
+                <div class="span4">
+                    <h2>Chart3</h2>
+                        <div id='c3'></div>
+                        <p>chart3 here</p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div><!--/span-->
+            </div><!--/row-->
+<!---------------------------------------------------------------->            
+            <div class="row-fluid">
+                <div class="span4">
+                    <h2>Chart4</h2>
+                        <div id='c4'></div>
+                        <p>chart4 here</p>
+                        <p><a class="btn" href="#">View details &raquo;</a></p>
+                    </div><!--/span-->
+                <div class="span4">
+                    <h2>Chart5</h2>
+                        <div id='c5'></div>
+                        <p>chart5 here</p>
+                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div><!--/span-->
+                <div class="span4">
+                    <h2>Chart6</h2>
+                        <div id='c6'></div>
+                        <p>chart6 here</p>
+                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div><!--/span-->
+            </div><!--/row-->
+        </div><!--/span-->
+    </div><!--/row-->
+
+<hr>
+
+    <footer>
+        <p>&copy; Amazon.jp 2013</p>
+    </footer>
+
+</div><!--/.fluid-container-->
+
+{% endblock %}

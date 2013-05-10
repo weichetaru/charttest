@@ -4,9 +4,14 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+#from kpidashboard import views
+#from views import *
+#from django.conf import settings
+
+
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'kpidashboard.views.home', name='home'),
+    url(r'^$', 'kpidashboard.views.home', name='home'),
     # url(r'^kpidashboard/', include('kpidashboard.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

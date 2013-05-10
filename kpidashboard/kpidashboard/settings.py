@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'chartit',
     'chartdemo',
+    'kpidashboard',
 )
 
 # A sample logging configuration. The only tangible logging
