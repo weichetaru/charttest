@@ -13,6 +13,12 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'kpidashboard.views.home', name='home'),
     # url(r'^kpidashboard/', include('kpidashboard.foo.urls')),
+    
+    #login / logout 
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'kpidashboard.views.logout_page'),
+
+
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block chart_loader_header %}
+    {% load chartit %}
+    {{ chart_list|load_charts:"chart_here" }}
+{% endblock %}  
+
+
+
+{% block content %}
+    It works!
+    <div id="chart_here"></div>
+{% endblock %}
