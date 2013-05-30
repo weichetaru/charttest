@@ -1,0 +1,169 @@
+
+{% extends "base.html" %}
+
+{% block jquery %}
+    $('table').tablesorter();
+    $('.nav-tabs a').click(function (e) {
+        e.preventDefault();
+        var kpi = this.textContent
+        var target = $(this).closest("ul").attr("id");
+        var byItem = $(this).parents("div").attr("id");
+        //console.log(byItem);
+        //change active tab
+        $('.nav-tabs li.active').removeClass();
+        $(this).parents().addClass('active');
+        $.ajax({
+            dataType:'json',
+            data:{
+                csrftoken:'{{csrf_token}}',
+                mklist:target,
+                byItem:byItem,
+            },
+            type:'GET',
+            processData:true,
+            cache:false,
+            url:kpi+'/',
+            success:function(res){
+                //console.log(res);
+                $('#kpi'+byItem+target).text(res.KPI);
+                $('#top'+byItem+target+' thead').empty();
+                $('#top'+byItem+target+' tbody').replaceWith(res.top[target]);
+                $('#detail'+byItem+target+' thead').empty();
+                $('#detail'+byItem+target+' tbody').replaceWith(res.detail[target]);
+            }    
+            })
+        })
+{% endblock %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+<div class="row-fluid">
+
+<div class="page-header">
+    <h1>Amazon <small> FT% Report for {{GL}}</small></h1>
+    <p class="muted">variance based on absolute value of WoW</p>
+</div>
+    <h3 class="text-info">Total Trend</h3>
+            <table class = "tablesorter table table-bordered table-hover table-condensed tablesorter">
+                {{ all.6|safe }}
+            </table>
+    <BR>
+    <h3 class = "text-info">By Category :
+    <span id = "kpiC6" class="text-info">{{KPI}}</span></h3>
+    <div id='C'>
+    <ul id="6" class="nav nav-tabs">
+        {% for var in showList %}
+            <li><a href="#">{{ var }}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div class="row-fluid">
+        <div class = "span10">
+            <p><em>sorted by variance</em></p>
+            <table id='topC6' class = "table table-bordered table-hover table-condensed tablesorter">
+                {{ topC.6|safe }}
+            </table>
+        </div>    
+        <div class = "span2"></div>    
+    </div>    
+
+    <div class="row-fluid">
+        <div class = "span1">
+            <img src="{% static 'img/arrow.jpg' %}" width='60%' height='60%'
+            vspace='10px' hspace='20px'>
+        </div>    
+        <div class = "span11">
+            <p><em>Tracking : Find out which Brand caused the variance (only for Top 5 variable categories)</em></p>
+            <table id = 'detailC6' class = "table table-bordered table-hover table-condensed tablesorter">
+                {{ detail.6|safe }}
+            </table>
+        </div>
+    </div>
+
+    <hr>
+    <h3 class="text-info">By Brand :
+    <span id = "kpiB6" class="text-info">{{KPI}}</span></h3>
+    <div id="B">
+    <ul id="6" class="nav nav-tabs">
+        {% for var in showList %}
+            <li><a href="#">{{ var }}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div class="row-fluid">
+        <div class = "span12">
+            <p><em>Top 20 variable Brand</em></p>
+            <table id='topB6' class = "table table-bordered table-hover table-condensed tablesorter">
+                {{ topB.6|safe }}
+            </table>
+        </div>    
+        <div class = "span0"></div>    
+    </div>    
+
+
+<HR size=6 color="#c09853">
+
+<div class="page-header">
+    <h1>Javari <small> FT% Report for {{GL}}</small></h1>
+    <p class="muted">variance based on absolute value of WoW</p>
+</div>
+    <h3 class="text-info">Total Trend</h3>
+            <table class = "tablesorter table table-bordered table-hover table-condensed tablesorter">
+                {{ all.41092|safe }}
+            </table>
+    <BR>
+    <h3 class="text-info">By Category :
+    <span id = "kpiC41092" class="text-info">{{KPI}}</span></h3>
+    <div id="C">
+    <ul id="41092" class="nav nav-tabs">
+        {% for var in showList %}
+            <li><a href="#">{{ var }}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div class="row-fluid">
+        <div class = "span10">
+            <p><em>sorted by variance</em></p>
+            <table id = 'topC41092' class = "table table-bordered table-hover table-condensed tablesorter">
+                {{ topC.41092|safe }}
+            </table>
+        </div>    
+        <div class = "span2"></div>    
+    </div>    
+
+    <div class="row-fluid">
+        <div class = "span1">
+            <img src="{% static 'img/arrow.jpg' %}" width='60%' height='60%'
+            vspace='20px' hspace='20px'>
+        </div>    
+        <div class = "span11">
+            <p><em>Tracking : Find out which Brand caused the variance (only for Top 5 variable categories)</em></p>
+            <table id = 'detailC41092' class = "table table-bordered table-hover table-condensed tablesorter">
+                {{ detail.41092|safe }}
+            </table>
+        </div>
+    </div>
+
+    <hr>
+    <h3 class="text-info">By Brand :
+    <span id = "kpiB41092" class="text-info">{{KPI}}</span></h3>
+    <div id="B">
+    <ul id="41092" class="nav nav-tabs">
+        {% for var in showList %}
+            <li><a href="#">{{ var }}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div class="row-fluid">
+        <div class = "span12">
+            <p><em>Top 20 variable Brand</em></p>
+            <table id='topB41092' class = "table table-bordered table-hover table-condensed tablesorter">
+                {{ topB.41092|safe }}
+            </table>
+        </div>    
+        <div class = "span0"></div>    
+    </div>    
+</div><!--row-fluid-->
+{% endblock%}

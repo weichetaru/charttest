@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+
+{% block jquery %}
+    $('table').tablesorter();
+    $('.nav-tabs a').click(function (e) {
+        e.preventDefault();
+        var kpi = this.textContent
+        var target = $(this).closest("ul").attr("id");
+        console.log(target);
+        //change active tab
+        $('.nav-tabs li.active').removeClass();
+        $(this).parents().addClass('active');
+        $.ajax({
+            dataType:'json',
+            data:{
+                csrftoken:'{{csrf_token}}',
+            },
+            type:'GET',
+            processData:true,
+            cache:false,
+            url:kpi+'/',
+            success:function(res){
+                //console.log(res.top['6']);
+                $('#kpi'+target).text(res.KPI);
+                $('#top'+target+' thead').empty();
+                $('#top'+target+' tbody').replaceWith(res.top[target]);
+                $('#detail'+target+' thead').empty();
+                $('#detail'+target+' tbody').replaceWith(res.detail[target]);
+            }    
+            })
+        })
+{% endblock %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+<div class="row-fluid">
+
+<div class="page-header">
+    <h1>Amazon <small> Repoos Report for {{GL}}</small></h1>
+</div>
+    <h3 class="text-info">Top 20 High Repoos Brand</h3>
+            <table class = "tablesorter table table-bordered table-hover table-condensed tablesorter">
+                {{ brand|safe }}
+            </table>
+    <BR>
+    <h3 class="text-info">Top 30 High Repoos ASIN</h3>
+            <table class = "tablesorter table table-bordered table-hover table-condensed tablesorter">
+                {{ asin|safe }}
+            </table>
+    <BR>
+
+</div><!--row-fluid-->
+{% endblock%}
