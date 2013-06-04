@@ -24,62 +24,58 @@ def buildContents(files):
                 line = line.replace('.00','')
             contents += line
     f.close()
-    return contents+" </tbody>"
+    return contents.decode("shift-jis") +" </tbody>"
 
 showList=["total_ft%","ft_retail%","ft_fba%","ctrl%","_3p_ctrl%","_3p_non_ctrl%","nofr%","total_ft","ft_retail","ft_fba","ctrl","_3p_ctrl","_3p_non_ctrl","nofr","total_glance_view"]
 
 def showTableFT(request,glCode,kpi = "total_ft%",mklist = ['6','41092']):
-    contentsTopC = {}
-    contentsTopB = {}
-    contentsDetail = {}
-    contentsAll = {}
+    contentsDic={
+            'dsKpiTopC' : {},
+            'dsKpiTopB' : {},
+            'dsKpiDetail' : {},
+            'ftResultall' : {}
+    }
     if request.is_ajax():
-        contentsTop = {}
         mkid = request.GET['mklist']
         byItem = request.GET['byItem']
-        path1=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode + "/dsKpiDetail_" + kpi+"_" + mkid + "_" + glCode + ".html")
-        path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode +
-                "/dsKpiTop"+byItem+"_" + kpi + "_" + mkid + "_" + glCode + ".html")
-        try:
-            contentsTop[mkid] = buildContents(path0)
-            contentsDetail[mkid] = buildContents(path1)
-        except:
-            contentsTop[mkid] = "<h4 class='text-error'>No Data <h4>"
-            contentsDetail[mkid] = "<h4 class='text-error'>No Data <h4>"
-        return HttpResponse(simplejson.dumps({'top' : contentsTop, 
-            'detail' : contentsDetail,'KPI' :kpi},ensure_ascii=False), content_type=u'application/json')
+        for key in ['dsKpiTop'+byItem,'dsKpiDetail']:
+            path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode+"/"+key+"_" +kpi + "_" + mkid + "_" + glCode + ".html")
+            try:
+                contentsDic[key][mkid] = buildContents(path0)
+            except:
+                contentsDic[key][mkid] = "<h4 class='text-error'>No Data <h4>"
+
+        return HttpResponse(simplejson.dumps({'top' :
+            contentsDic['dsKpiTop'+byItem], 
+            'detail' : contentsDic['dsKpiDetail'],'KPI' :kpi},ensure_ascii=False), content_type=u'application/json')
     else:
         for mkid in mklist:
-            path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode + "/dsKpiTopC_" + kpi + "_" + mkid + "_" + glCode + ".html")
-            path1=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode + "/dsKpiDetail_" + kpi+"_" + mkid + "_" + glCode + ".html")
-            path2=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode + "/ftResultall_all" + "_" + mkid + "_" + glCode + ".html")
-            path3=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode + "/dsKpiTopB_" + kpi + "_" + mkid + "_" + glCode + ".html")
-            try:
-                contentsTopC[mkid] = buildContents(path0)
-                contentsDetail[mkid] = buildContents(path1)
-                contentsAll[mkid] = buildContents(path2)
-                contentsTopB[mkid] = buildContents(path3)
-            except:
-                contentsTopC[mkid] = "<h4 class='text-error'>No Data <h4>"
-                contentsDetail[mkid] = "<h4 class='text-error'>No Data <h4>"
-                contentsAll[mkid] = "<h4 class='text-error'>No Data <h4>"
-                contentsTopB[mkid] = "<h4 class='text-error'>No Data <h4>"
-        return render_to_response('report/reportFt.html',{'all' : contentsAll,'topC' : contentsTopC,
-            'topB' :contentsTopB, 'detail' : contentsDetail,'GL' : glCode,'KPI' : kpi, 'showList':showList })
+            for key in contentsDic:
+                if key == 'ftResultall':
+                    path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" +glCode+"/"+key+"_all" + "_" + mkid + "_" + glCode + ".html")
+                else:
+                    path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode+"/"+key+"_" +kpi + "_" + mkid + "_" + glCode + ".html")
+                try:
+                    contentsDic[key][mkid] = buildContents(path0)
+                except:
+                    contentsDic[key][mkid] = "<h4 class='text-error'>No Data <h4>"
 
+        return render_to_response('report/reportFt.html',{'all'
+            :contentsDic['ftResultall'],'topC' : contentsDic['dsKpiTopC'],'topB'
+            : contentsDic['dsKpiTopB'], 'detail' :contentsDic['dsKpiDetail'],'GL' : glCode,'KPI' : kpi, 'showList':showList })
 
 
 def showTableRep(request,glCode,kpi = "repoos"):
-    contentsBrand = {}
-    contentsAsin = {}
-    path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode +"/dsKpiRepBrand" + "_" + glCode + ".html")
-    path1=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode +"/dsKpiRepASIN" + "_" + glCode + ".html")
-    try:
-        contentsBrand = buildContents(path0)
-        contentsAsin = buildContents(path1)
-    except:
-        contentsBrand = "<h4 class='text-error'>No Data <h4>"
-        contentsAsin = "<h4 class='text-error'>No Data <h4>"
+    contentsDic={
+            'dsKpiRepBrand' : {},
+            'dsKpiRepASIN' : {},
+    }
+    for key in contentsDic:
+        path0=os.path.join(settings.MEDIA_ROOT, "ftReport/" + glCode+"/"+key + "_" + glCode + ".html")
+        try:
+            contentsDic[key] = buildContents(path0)
+        except:
+            contentsDic[key] = "<h4 class='text-error'>No Data <h4>"
     return render_to_response('report/reportRep.html',
-            {'brand' : contentsBrand,'asin' : contentsAsin, 'GL' : glCode,'KPI' : kpi})
+            {'brand' : contentsDic['dsKpiRepBrand'],'asin' : contentsDic['dsKpiRepASIN'], 'GL' : glCode,'KPI' : kpi})
 
