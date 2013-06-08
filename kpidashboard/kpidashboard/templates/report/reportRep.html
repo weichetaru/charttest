@@ -3,33 +3,6 @@
 
 {% block jquery %}
     $('table').tablesorter();
-    $('.nav-tabs a').click(function (e) {
-        e.preventDefault();
-        var kpi = this.textContent
-        var target = $(this).closest("ul").attr("id");
-        console.log(target);
-        //change active tab
-        $('.nav-tabs li.active').removeClass();
-        $(this).parents().addClass('active');
-        $.ajax({
-            dataType:'json',
-            data:{
-                csrftoken:'{{csrf_token}}',
-            },
-            type:'GET',
-            processData:true,
-            cache:false,
-            url:kpi+'/',
-            success:function(res){
-                //console.log(res.top['6']);
-                $('#kpi'+target).text(res.KPI);
-                $('#top'+target+' thead').empty();
-                $('#top'+target+' tbody').replaceWith(res.top[target]);
-                $('#detail'+target+' thead').empty();
-                $('#detail'+target+' tbody').replaceWith(res.detail[target]);
-            }    
-            })
-        })
 {% endblock %}
 
 {% block content %}

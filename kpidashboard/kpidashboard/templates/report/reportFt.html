@@ -2,16 +2,23 @@
 {% extends "base.html" %}
 
 {% block jquery %}
+    //initialize
     $('table').tablesorter();
+    $('#C6 .nav-tabs li:eq(0)').addClass('active');
+    $('#C41092 .nav-tabs li:eq(0)').addClass('active');
+    $('#B6 .nav-tabs li:eq(0)').addClass('active');
+    $('#B41092 .nav-tabs li:eq(0)').addClass('active');
     $('.nav-tabs a').click(function (e) {
         e.preventDefault();
         var kpi = this.textContent
-        var target = $(this).closest("ul").attr("id");
-        var byItem = $(this).parents("div").attr("id");
+        var str = $(this).parents("div").attr("id");
+        var target = str.slice(1);
+        var byItem = str.slice(0,1);
         //console.log(byItem);
         //change active tab
-        $('.nav-tabs li.active').removeClass();
-        $(this).parents().addClass('active');
+        $('#'+str+' .nav-tabs li.active').removeClass();
+        $(this).parents('li').first().addClass('active');
+        //ajax to choose kpi
         $.ajax({
             dataType:'json',
             data:{
@@ -26,10 +33,9 @@
             success:function(res){
                 //console.log(res);
                 $('#kpi'+byItem+target).text(res.KPI);
-                $('#top'+byItem+target+' thead').empty();
-                $('#top'+byItem+target+' tbody').replaceWith(res.top[target]);
-                $('#detail'+byItem+target+' thead').empty();
-                $('#detail'+byItem+target+' tbody').replaceWith(res.detail[target]);
+                $('#top'+byItem+target).html(res.top[target]);
+                $('#detail'+byItem+target).html(res.detail[target]);
+                $('table').tablesorter();
             }    
             })
         })
@@ -52,8 +58,8 @@
     <BR>
     <h3 class = "text-info">By Category :
     <span id = "kpiC6" class="text-info">{{KPI}}</span></h3>
-    <div id='C'>
-    <ul id="6" class="nav nav-tabs">
+    <div id='C6'>
+    <ul class="nav nav-tabs">
         {% for var in showList %}
             <li><a href="#">{{ var }}</a></li>
         {% endfor %}
@@ -85,8 +91,8 @@
     <hr>
     <h3 class="text-info">By Brand :
     <span id = "kpiB6" class="text-info">{{KPI}}</span></h3>
-    <div id="B">
-    <ul id="6" class="nav nav-tabs">
+    <div id="B6">
+    <ul  class="nav nav-tabs">
         {% for var in showList %}
             <li><a href="#">{{ var }}</a></li>
         {% endfor %}
@@ -116,8 +122,8 @@
     <BR>
     <h3 class="text-info">By Category :
     <span id = "kpiC41092" class="text-info">{{KPI}}</span></h3>
-    <div id="C">
-    <ul id="41092" class="nav nav-tabs">
+    <div id="C41092">
+    <ul  class="nav nav-tabs">
         {% for var in showList %}
             <li><a href="#">{{ var }}</a></li>
         {% endfor %}
@@ -149,8 +155,8 @@
     <hr>
     <h3 class="text-info">By Brand :
     <span id = "kpiB41092" class="text-info">{{KPI}}</span></h3>
-    <div id="B">
-    <ul id="41092" class="nav nav-tabs">
+    <div id="B41092">
+    <ul class="nav nav-tabs">
         {% for var in showList %}
             <li><a href="#">{{ var }}</a></li>
         {% endfor %}
