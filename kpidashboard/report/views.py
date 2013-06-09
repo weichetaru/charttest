@@ -30,7 +30,7 @@ def buildContents(files):
     return contents.decode("shift-jis") +" </tbody>"
 """
 
-showList=["total_ft%","ft_retail%","ft_fba%","ctrl%","_3p_ctrl%","_3p_non_ctrl%","nofr%","total_ft","ft_retail","ft_fba","ctrl","_3p_ctrl","_3p_non_ctrl","nofr","total_glance_view"]
+showList=["total_ft%","ft_retail%","ft_fba%","ctrl%","x3p_ctrl%","x3p_non_ctrl%","nofr%","total_ft","ft_retail","ft_fba","ctrl","x3p_ctrl","x3p_non_ctrl","nofr","total_glance_view"]
 
 def isnum(x):
     import locale
